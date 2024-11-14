@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use  App\Http\Controllers\NewstudentController;
 use App\Http\Controllers\CSVUploadController;
+use App\Http\Controllers\LeaverequestController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -62,4 +63,12 @@ Route::put('/roles/{roleId}/give-permission', [RoleController::class,'updatePerm
 
 
 
+});
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/leave', [LeaverequestController::class, 'index'])->name('leave.index');
+    Route::post('/apply-leave', [LeaverequestController::class, 'apply'])->name('leave.apply');
+    Route::post('/leave/{leaveRequest}/approve', [LeaverequestController::class, 'approve'])->name('leave.approve');
+    Route::post('/leave/{leaveRequest}/reject', [LeaverequestController::class, 'reject'])->name('leave.reject');
 });
