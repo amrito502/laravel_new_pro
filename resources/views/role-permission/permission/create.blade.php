@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                        <h4>Create Permission <a href="{{ route('permissions.index') }}" class="btn btn-success float-end">Permissions</a></h4>
+                        <h4>Create Permission @can('view permission')<a href="{{ route('permissions.index') }}" class="btn btn-success float-end">Permissions</a>@endcan</h4>
                 </div>
                 <div class="card-body">
                     <form action="{{ url('permissions') }}" method="post">

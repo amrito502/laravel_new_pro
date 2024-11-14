@@ -9,9 +9,11 @@
             @endif
             <div class="card">
                 <div class="card-header">
+                    @can('view role')
                     <h4>Role : {{$role->name}}
                         <a href="{{ route('roles.index') }}" class="btn btn-success float-end">Roles</a>
                     </h4>
+                    @endcan
                 </div>
                 <div class="card-body">
                     <form action="{{ url('roles/' . $role->id . '/give-permission') }}" method="post">
@@ -19,9 +21,9 @@
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
-                            @error('permission')
-                            <span class="text-danger">{{ $message->first('permission') }}</span>
-                            @enderror
+                            {{-- @if ($errors->has('permission'))
+                                <span class="text-danger">{{ $errors->first('permission') }}</span>
+                            @endif --}}
                             <label for="">Permissions</label>
                             <div class="row">
                                 @foreach ($permissions as $permission)

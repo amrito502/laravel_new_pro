@@ -11,8 +11,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Edit User <a href="{{ url('users') }}" class="btn btn-success float-end">Users</a>
-                    </h4>
+                    <h4>Edit User @can('view user')<a href="{{ url('users') }}" class="btn btn-success float-end">Users</a>@endcan</h4>
                 </div>
                 <div class="card-body">
                   

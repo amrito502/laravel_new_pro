@@ -11,8 +11,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Create User <a href="{{ route('users.index') }}" class="btn btn-success float-end">Users</a>
-                    </h4>
+                        <h4>Create User @can('view user')<a href="{{ route('users.index') }}" class="btn btn-success float-end">Users</a>@endcan</h4>
                 </div>
                 <div class="card-body">
                   

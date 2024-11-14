@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                        <h4>Edit Role <a href="{{ route('roles.index') }}" class="btn btn-success float-end">Roles</a></h4>
+                        <h4>Edit Role @can('view role')<a href="{{ route('roles.index') }}" class="btn btn-success float-end">Roles</a>@endcan</h4>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('roles.update',$role->id) }}" method="post">

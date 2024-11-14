@@ -6,6 +6,14 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view permission',['only'=> ['index']]);
+        $this->middleware('permission:create permission',['only'=> ['create','store']]);
+        $this->middleware('permission:edit permission',['only'=> ['edit','update']]);
+        $this->middleware('permission:delete permission',['only'=> ['destory']]);
+    }
+
     public function index(){
         $permissions = Permission::get();
         return view('role-permission.permission.index',[
@@ -29,7 +37,7 @@ class PermissionController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect()->route('permissions.index')->with('status','Permission created successfully');
+        return redirect()->back()->with('status','Permission created successfully');
 
 
     }

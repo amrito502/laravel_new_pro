@@ -10,8 +10,8 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h4>Roles <a href="{{ route('roles.create') }}" class="btn btn-success float-end">Add
-                            Role</a></h4>
+                    <h4>Roles @can('create role')<a href="{{ route('roles.create') }}" class="btn btn-success float-end">Add
+                            Role</a>@endcan</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-striped">
@@ -19,7 +19,9 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                @canany(['edit role','delete role'])
                                 <th>Action</th>
+                                @endcanany
                             </tr>
                         </thead>
                         <tbody>
@@ -28,10 +30,12 @@
                                 <td>{{ $role->id }}</td>
                                 <td>{{ $role->name }}</td>
                                 <td>
-                                    <a href="{{ url('roles/'.$role->id.'/give-permission') }}" class="btn btn-info">
-                                       Add / Edit Role Permission</a>
-                                    <a href="{{ url('roles/'.$role->id.'/edit') }}" class="btn btn-info">Edit</a>
-                                    <a href="{{ url('roles/'.$role->id.'/delete') }}" class="btn btn-danger">Delete</a>
+                                   
+                                       
+                                    @can('give permission')<a href="{{ url('roles/'.$role->id.'/give-permission') }}" class="btn btn-info">
+                                       Add / Edit Role Permission</a>@endcan
+                                    @can('edit role')<a href="{{ url('roles/'.$role->id.'/edit') }}" class="btn btn-info">Edit</a>@endcan
+                                    @can('delete role')<a href="{{ url('roles/'.$role->id.'/delete') }}" class="btn btn-danger">Delete</a>@endcan
                                 </td>
                             </tr>
                             @endforeach

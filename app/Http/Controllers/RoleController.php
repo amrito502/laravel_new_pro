@@ -7,6 +7,15 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view role',['only'=> ['index']]);
+        $this->middleware('permission:create role',['only'=> ['create','store']]);
+        $this->middleware('permission:edit role',['only'=> ['edit','update']]);
+        $this->middleware('permission:delete role',['only'=> ['destory']]);
+        $this->middleware('permission:give permission',['only'=> ['addPermissionToRole','updatePermissionToRole']]);
+    }
+
     public function index(){
         $roles = Role::get();
         return view('role-permission.roles.index',[
@@ -76,9 +85,9 @@ class RoleController extends Controller
 
 
     public function updatePermissionToRole(Request $request,$roleId){
-        $request->validate([
-            'permission' =>'required',
-        ]);
+        // $request->validate([
+        //     'permission' =>'required',
+        // ]);
         $role = Role::findOrFail($roleId);
         $role->syncPermissions($request->permission);
         return redirect()->back()->with('status','Permission Added To Role');

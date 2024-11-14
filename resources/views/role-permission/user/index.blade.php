@@ -10,8 +10,8 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h4>Users <a href="{{ route('users.create') }}" class="btn btn-success float-end">Add
-                            User</a></h4>
+                    <h4>Users @can('create user')<a href="{{ route('users.create') }}" class="btn btn-success float-end">Add
+                            User</a>@endcan</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-striped">
@@ -21,7 +21,9 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Roles</th>
-                                <th>Action</th>
+                                @canany(['edit user', 'delete user'])
+                                    <th>Action</th>
+                                @endcanany
                             </tr>
                         </thead>
                         <tbody>
@@ -38,8 +40,8 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ url('users/'.$user->id.'/edit') }}" class="btn btn-info">Edit</a>
-                                    <a href="{{ url('users/'.$user->id.'/delete') }}" class="btn btn-danger">Delete</a>
+                                    @can('edit user')<a href="{{ url('users/'.$user->id.'/edit') }}" class="btn btn-info">Edit</a>@endcan
+                                    @can('delete user')<a href="{{ url('users/'.$user->id.'/delete') }}" class="btn btn-danger">Delete</a>@endcan
                                 </td>
                             </tr>
                             @endforeach

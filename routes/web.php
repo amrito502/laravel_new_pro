@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use  App\Http\Controllers\NewstudentController;
@@ -7,6 +8,8 @@ use App\Http\Controllers\CSVUploadController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,7 +21,24 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::group([], function(){
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
+
+Route::middleware('auth')->group(function(){
 
 
 
@@ -42,32 +62,4 @@ Route::put('/roles/{roleId}/give-permission', [RoleController::class,'updatePerm
 
 
 
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Route::get('upload', [CSVUploadController::class, 'showUploadForm'])->name('upload.form');
-Route::post('upload', [CSVUploadController::class, 'uploadCSV'])->name('upload.csv');
-
-
-Route::get('/students/upload', [StudentController::class, 'showUploadForm']);
-Route::post('/students/upload', [StudentController::class, 'uploadCsv']);
-
-Route::get('/new-student', [NewstudentController::class, 'index'])->name('new.index');
-Route::post('/new-student/store', [NewstudentController::class, 'store'])->name('new.store');
-
-Route::get('/', function () {
-    return view('welcome');
 });
